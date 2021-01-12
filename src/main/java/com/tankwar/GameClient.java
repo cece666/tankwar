@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameClient extends JComponent {
@@ -13,12 +14,19 @@ public class GameClient extends JComponent {
     private List<Tank> enemyTanks;
     private List<Wall> walls;
 
+
     public GameClient() {
+        this.walls = Arrays.asList(
+                new Wall(200, 140, true, 15),
+                new Wall(200, 540, true, 15),
+                new Wall(100, 80, false, 15),
+                new Wall(700, 80, false, 15)
+        );
         this.playerTank = new Tank(400,100,Direction.DOWN);
         this.enemyTanks = new ArrayList<>(12);
             for (int i=0; i<3; i++){
                 for (int j=0; j<4; j++) {
-                    this.enemyTanks.add(new Tank(200+j*60, 400+40*i,true,  Direction.UP));
+                    this.enemyTanks.add(new Tank(200+j*120, 400+40*i,true,  Direction.UP));
                 }
             }
 
@@ -29,9 +37,14 @@ public class GameClient extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 800, 600);
         this.playerTank.draw(g);
         for (Tank tank : this.enemyTanks){
             tank.draw(g);
+        }
+        for (Wall wall : walls) {
+            wall.draw(g);
         }
     }
 
@@ -43,13 +56,13 @@ public class GameClient extends JComponent {
         frame.add(client);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
+        //制于界面中间
         frame.setLocationRelativeTo(null);
 
         frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 client.playerTank.keyPressed(e);
-
             }
 
             @Override
