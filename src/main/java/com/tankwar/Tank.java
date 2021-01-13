@@ -85,15 +85,42 @@ public class Tank {
     }
 
     void draw(Graphics g) {
+        int oldX = x;
+        int oldY = y;
         this.determineDirection();
         this.move();
+
+        //boundary setting
         if (x < 0) x = 0;
         else if (x > 800- getImage().getWidth(null)) x = 800 - getImage().getWidth(null);
         if (y < 0) y = 0;
         else if (y > 600 - getImage().getHeight(null)) y = 600 - getImage().getHeight(null);
 
+        Rectangle recTank = getRectangle();
+
+        for(Wall wall : GameClient.getInstance().getWalls()){
+            if(recTank.intersects(wall.getRectangle())){
+                x = oldX;
+                y = oldY;
+                break;
+            }
+        }
+
+        for (Tank tank : GameClient.getInstance().getEnemyTanks()){
+            if (recTank.intersects(tank.getRectangle())){
+                x = oldX;
+                y = oldY;
+                break;
+            }
+        }
 
         g.drawImage(this.getImage(), this.x, this.y, null);
+    }
+
+
+
+    public Rectangle getRectangle(){
+        return new Rectangle(x, y, getImage().getWidth(null), getImage().getHeight(null));
     }
 
     Image getImage() {
