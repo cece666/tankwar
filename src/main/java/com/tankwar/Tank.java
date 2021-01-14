@@ -18,6 +18,8 @@ public class Tank {
 
     private Direction direction;
 
+    private static final int MOVE_SPEED = 5;
+
     public Tank(int x, int y, Direction direction) {
         this(x,y,false,direction);
     }
@@ -55,37 +57,8 @@ public class Tank {
 
     void move() {
         if (this.stopped) return;
-
-        switch (direction) {
-            case UP:
-                y -= 5;
-                break;
-            case LEFT_UP:
-                y -= 5;
-                x -= 5;
-                break;
-            case RIGHT_UP:
-                y -= 5;
-                x += 5;
-                break;
-            case DOWN:
-                y += 5;
-                break;
-            case LEFT_DOWN:
-                x -= 5;
-                y += 5;
-                break;
-            case RIGHT_DOWN:
-                x += 5;
-                y += 5;
-                break;
-            case LEFT:
-                x -= 5;
-                break;
-            case RIGHT:
-                x += 5;
-                break;
-        }
+        x += direction.x  * MOVE_SPEED;
+        y += direction.y  * MOVE_SPEED;
     }
 
     void draw(Graphics g) {
