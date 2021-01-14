@@ -13,6 +13,7 @@ public class GameClient extends JComponent {
     private Tank playerTank;
     private List<Tank> enemyTanks;
     private List<Wall> walls;
+    private List<Missile> missiles;
     private static final GameClient INSTANCE = new GameClient();
 
     static GameClient getInstance() {
@@ -34,10 +35,15 @@ public class GameClient extends JComponent {
                     this.enemyTanks.add(new Tank(200+j*120, 400+40*i,true,  Direction.UP));
                 }
             }
+        this.missiles = new ArrayList<>();
 
         //800*600 window:
         this.setPreferredSize(new Dimension(800,600));
 
+    }
+
+    public List<Missile> getMissiles() {
+        return missiles;
     }
 
     public List<Wall> getWalls() {
@@ -59,13 +65,16 @@ public class GameClient extends JComponent {
         for (Wall wall : walls) {
             wall.draw(g);
         }
+        for (Missile missile : missiles){
+            missile.draw(g);
+        }
     }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         frame.setTitle("CC 的坦克大战");
         frame.setIconImage(new ImageIcon("assets/images/icon.png").getImage());
-        GameClient client = new GameClient();
+        GameClient client = GameClient.getInstance();
         frame.add(client);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
