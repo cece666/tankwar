@@ -20,6 +20,13 @@
             <version>5.4.2</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-media -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>16-ea+6</version>
+        </dependency>
+
     </dependencies>
 
 
